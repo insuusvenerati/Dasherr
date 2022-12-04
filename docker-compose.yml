@@ -1,0 +1,23 @@
+version: "3.8"
+services:
+  glances:
+    image: nicolargo/glances
+    container_name: glances
+    restart: always
+    pid: "host"
+    command: [ "glances", "-w" ]
+    ports:
+      - "61208:61208"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /etc:/host/etc:ro
+    # environment:
+    #   - GLANCES_OPT="-w"
+
+  dasherr:
+    build: .
+    image: stiforr/dasherr
+    ports:
+      - "8080:80"
